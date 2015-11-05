@@ -62,7 +62,7 @@ PokerHand.prototype.evaluate = function() {
     var rank = this.getRank().replace(/_/g, ' ').toLowerCase(),
         type = this.getType().replace(/_/g, ' ').toLowerCase();
 
-    return 'You have ' + type + ' which ranks ' + rank;
+    return type + ' which ranks ' + rank;
 };
 
 // Determines the suit of a card
@@ -75,7 +75,7 @@ PokerHand.prototype.getCardSuit = function( card ) {
     for ( var i = 0; i < characters.length; i++ ) {
         
         // card suits are lowercase letters and not a number
-        if ( characters[i] === characters[i].toLowerCase() && isNaN( characters[i] ) {
+        if ( characters[i] === characters[i].toLowerCase() && isNaN( characters[i] ) ) {
             suit = characters[i];
         }
     }
@@ -93,14 +93,14 @@ PokerHand.prototype.getCardType = function( card ) {
     for ( var i = 0; i < characters.length; i++ ) {
         
         // card types are a number or uppercase letters
-        if ( !isNaN( characters[i] ) {
+        if ( !isNaN( characters[i] ) ) {
             typeArray.push( characters[i] );
         } else if ( characters[i] === characters[i].toUpperCase() ) {
             typeArray.push( characters[i] );
         }
     }
 
-    return typeArray.toString();
+    return typeArray.join('').toString();
 };
 
 // Determine the poker hand's rank
@@ -124,12 +124,12 @@ PokerHand.prototype.getSameType = function() {
         types[i] = 0;                
     }
 
-    for ( var i = 0; i < this.cards.length; i++ ) {
+    for ( i = 0; i < this.cards.length; i++ ) {
         var thisType = this.getCardType( this.cards[i] );
 
         // Increment type at key
         types[ this.cardTypeToInt[ thisType ] ] += 1;
-    };
+    }
 
     return types;
 };
@@ -140,7 +140,7 @@ PokerHand.prototype.getType = function() {
 
     var totalCards = 5,
         isFlush = this.numSameSuit() === totalCards,
-        isStraight = this.numInOrder() === totalCards,
+        isStraight = this.numInOrder() === totalCards - 1,
         pairCount = 0,
         sameTypeArray = this.getSameType(),
         type = 'HIGH_CARD';
@@ -190,7 +190,7 @@ PokerHand.prototype.numInOrder = function() {
         var thisType = this.getCardType( this.cards[i] );
 
         typeArray.push( this.cardTypeToInt[ thisType ] );
-    };
+    }
 
     // Sort the array by number
     typeArray = typeArray.sort( function( a, b ) { 
@@ -198,15 +198,15 @@ PokerHand.prototype.numInOrder = function() {
     });
 
     // Find the number of cards in order
-    for ( var i = 0; i < typeArray.length; i++ ) {
+    for ( i = 0; i < typeArray.length; i++ ) {
         var thisCard = typeArray[i],
             nextCard = typeArray[i + 1];
         
         // Are the two cards within one?
-        if ( thisCard === nextCard + 1  ) {
+        if ( nextCard && thisCard === nextCard - 1  ) {
             numInOrder += 1;
         }
-    };
+    }
 
     return numInOrder;
 };
@@ -224,12 +224,12 @@ PokerHand.prototype.numSameSuit = function() {
         suits[i] = 0;                 
     }
 
-    for ( var i = 0; i < this.cards.length; i++ ) {
+    for ( i = 0; i < this.cards.length; i++ ) {
         var thisSuit = this.getCardSuit( this.cards[i] );
 
         // Increment suit at key
-        suits[ this.cardTypeToInt[ thisSuit ] ] += 1;
-    };
+        suits[ this.cardSuitToInt[ thisSuit ] ] += 1;
+    }
 
     return Math.max.apply( null, suits );
 };
