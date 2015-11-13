@@ -43,7 +43,7 @@ describe( 'PokerHand', function() {
     });
 
     it( 'should not wrap cards for a straight', function() {
-        var cards = ['2d', '3c', '40s', '5h', 'Ah'],
+        var cards = ['2d', '3c', '4s', 'Kh', 'Ah'],
             pokerHand = new PokerHand( cards ),
             result = pokerHand.evaluate();
 
