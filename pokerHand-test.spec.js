@@ -2,7 +2,7 @@ var PokerHand = require( './pokerHand.js' );
 
 describe( 'PokerHand', function() {
 
-	it( 'should evaluate a straight flush', function() {
+    it( 'should evaluate a straight flush', function() {
         var cards = ['Jd', '9d', '10d', '8d', 'Qd'],
             pokerHand = new PokerHand( cards ),
             result = pokerHand.evaluate();
@@ -26,7 +26,7 @@ describe( 'PokerHand', function() {
         expect( result ).toEqual( 'full house which ranks 3rd' );
     });
 
-	it( 'should evaluate a flush', function() {
+    it( 'should evaluate a flush', function() {
         var cards = ['Ad', '9d', '3d', '8d', 'Qd'],
             pokerHand = new PokerHand( cards ),
             result = pokerHand.evaluate();
